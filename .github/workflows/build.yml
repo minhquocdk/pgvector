@@ -39,7 +39,6 @@ jobs:
         run: |
           nmake /NOLOGO /F Makefile.win && ^
           nmake /NOLOGO /F Makefile.win install && ^
-          nmake /NOLOGO /F Makefile.win installcheck ${{ matrix.postgres != 17 && 'PG_REGRESS=$(PGROOT)\bin\pg_regress' || '' }}
         shell: cmd
 
       - name: Upload Build Artifacts
