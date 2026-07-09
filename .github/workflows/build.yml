@@ -21,14 +21,19 @@ jobs:
         with:
           postgres-version: ${{ matrix.postgres }}
 
+      # 1. Thêm bước này để tự động thiết lập môi trường Visual Studio x64
+      - name: Set up MSVC
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+
+      # 2. Bây giờ bạn có thể gọi thẳng nmake mà không cần dùng lệnh 'call "C:\..." && ^' nữa
       - name: Build and Test
         run: |
-          call "C:\Program Files\Microsoft Visual Studio\${{ matrix.os == 'windows-2025' && '2022' || '2022' }}\Enterprise\VC\Auxiliary\Build\vcvars64.bat" && ^
           nmake /NOLOGO /F Makefile.win && ^
           nmake /NOLOGO /F Makefile.win install && ^
           nmake /NOLOGO /F Makefile.win installcheck ${{ matrix.postgres != 17 && 'PG_REGRESS=$(PGROOT)\bin\pg_regress' || '' }}
         shell: cmd
-        # Lưu ý: Đã BỎ lệnh 'clean' và 'uninstall' ở trên để giữ lại file đã build nhằm upload ở bước dưới
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
