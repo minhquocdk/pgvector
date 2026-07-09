@@ -45,12 +45,11 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: windows-pg${{ matrix.postgres }}-${{ matrix.os }}
-          # Thay đổi đường dẫn 'path' dưới đây cho đúng với file bạn muốn giữ (ví dụ file .dll hoặc thư mục cụ thể)
           path: |
-            *.dll
-            *.so
-            *.sql
-            *.control
+            **/*.dll
+            **/*.so
+            **/*.sql
+            **/*.control
           if-no-files-found: warn
 
       - if: ${{ failure() }}
