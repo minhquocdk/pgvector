@@ -15,10 +15,20 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - uses: ankane/setup-postgres@v1
-        with:
-          postgres-version: ${{ matrix.postgres }}
-      
+      - name: Install PostgreSQL 18.2 Manually
+        run: |
+          echo "=== Dang tai PostgreSQL 18.2 Binaries cho Windows ==="
+          # Tải trực tiếp file zip chính thức từ EnterpriseDB
+          curl -L "https://sbp.enterprisedb.com/getbinary.jsp?file_id=12613" -o postgresql-18.2.zip
+          
+          echo "=== Dang giai nen vao thu muc C:\pg18 ==="
+          powershell Expand-Archive -Path postgresql-18.2.zip -DestinationPath C:\pg18
+          
+          echo "=== Cau hinh bien moi truong he thong ==="
+          echo "PGROOT=C:\pg18\pgsql" >> %GITHUB_ENV%
+          echo "C:\pg18\pgsql\bin" >> %GITHUB_PATH%
+        shell: cmd
+        
       - name: Find Visual Studio Path
         run: |
           echo "=== Kiem tra cac thu muc Visual Studio dang co ==="
