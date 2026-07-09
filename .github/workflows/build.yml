@@ -18,12 +18,17 @@ jobs:
       - uses: ankane/setup-postgres@v1
         with:
           postgres-version: ${{ matrix.postgres }}
-
-      # 1. Thêm bước này để tự động thiết lập môi trường Visual Studio x64
-      - name: Set up MSVC
-        uses: ilammy/msvc-dev-cmd@v1
-        with:
-          arch: x64
+      
+      - name: Find Visual Studio Path
+        run: |
+          echo "=== Kiem tra cac thu muc Visual Studio dang co ==="
+          if exist "C:\Program Files\Microsoft Visual Studio" dir "C:\Program Files\Microsoft Visual Studio" /b
+          if exist "C:\Program Files (x86)\Microsoft Visual Studio" dir "C:\Program Files (x86)\Microsoft Visual Studio" /b
+          
+          echo "=== Tim kiem file vcvars64.bat ==="
+          where /R "C:\Program Files\Microsoft Visual Studio" vcvars64.bat 2>nul || echo "Khong thay trong Program Files"
+          where /R "C:\Program Files (x86)\Microsoft Visual Studio" vcvars64.bat 2>nul || echo "Khong thay trong Program Files (x86)"
+        shell: cmd
 
       # 2. Bây giờ bạn có thể gọi thẳng nmake mà không cần dùng lệnh 'call "C:\..." && ^' nữa
       - name: Build and Test
