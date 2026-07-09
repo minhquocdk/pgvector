@@ -15,18 +15,14 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - name: Install PostgreSQL 18.2 Manually
+      - name: Install PostgreSQL 18 via Chocolatey
         run: |
-          echo "=== Dang tai PostgreSQL 18.2 Binaries cho Windows ==="
-          # Tải trực tiếp file zip chính thức từ EnterpriseDB
-          curl -L "https://sbp.enterprisedb.com/getbinary.jsp?file_id=12613" -o postgresql-18.2.zip
-          
-          echo "=== Dang giai nen vao thu muc C:\pg18 ==="
-          powershell Expand-Archive -Path postgresql-18.2.zip -DestinationPath C:\pg18
+          echo "=== Dang cai dat Postgres bang Chocolatey ==="
+          choco install postgresql18 --no-progress -y
           
           echo "=== Cau hinh bien moi truong he thong ==="
-          echo "PGROOT=C:\pg18\pgsql" >> %GITHUB_ENV%
-          echo "C:\pg18\pgsql\bin" >> %GITHUB_PATH%
+          echo "PGROOT=C:\Program Files\PostgreSQL\18" >> %GITHUB_ENV%
+          echo "C:\Program Files\PostgreSQL\18\bin" >> %GITHUB_PATH%
         shell: cmd
         
       - name: Set up MSVC
