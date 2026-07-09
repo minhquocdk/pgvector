@@ -37,7 +37,7 @@ jobs:
       # 2. Bây giờ bạn có thể gọi thẳng nmake mà không cần dùng lệnh 'call "C:\..." && ^' nữa
       - name: Build and Test
         run: |
-          nmake /NOLOGO /F Makefile.win && ^
+          nmake /NOLOGO /F Makefile.win
           nmake /NOLOGO /F Makefile.win install
         shell: cmd
 
