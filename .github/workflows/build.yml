@@ -38,7 +38,7 @@ jobs:
       - name: Build and Test
         run: |
           nmake /NOLOGO /F Makefile.win && ^
-          nmake /NOLOGO /F Makefile.win install && ^
+          nmake /NOLOGO /F Makefile.win install
         shell: cmd
 
       - name: Upload Build Artifacts
