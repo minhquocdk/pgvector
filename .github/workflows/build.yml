@@ -15,13 +15,15 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - name: Install PostgreSQL 18.2 Manually
+      - name: Install PostgreSQL 18.4.2 Manually
         run: |
-          echo "=== Dang tai PostgreSQL 18.2 Binaries cho Windows ==="
-          curl -L "https://sbp.enterprisedb.com/getbinary.jsp?file_id=12613" -o postgresql-18.2.zip
+          echo "=== Dang tai PostgreSQL 18.4.2 Binaries cho Windows ==="
+          
+          # Su dung link direct truc tiep tu user cung cap, van kem User-Agent cho chac chan
+          curl -L -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" "https://get.enterprisedb.com/postgresql/postgresql-18.4-2-windows-x64-binaries.zip" -o postgresql-18.4.2.zip
           
           echo "=== Dang giai nen vao thu muc C:\pg18 ==="
-          7z x postgresql-18.2.zip -oC:\pg18
+          7z x postgresql-18.4.2.zip -oC:\pg18
           
           echo "=== Cau hinh bien moi truong he thong ==="
           echo "PGROOT=C:\pg18\pgsql" >> %GITHUB_ENV%
